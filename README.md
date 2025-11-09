@@ -40,6 +40,8 @@
     -feed filter silce : update feedSlice to update after action
     -Fix signup too after signUp token genrated auto for login
     -Bug fix : when no user / to /login and { replace: true } in navigate
+    -Bug fix : auto feed update 
+    -BUG : pagination (beckend BUG)
 
 
     <!--DevTinder Season 03 -->
