@@ -40,3 +40,48 @@
     -feed filter silce : update feedSlice to update after action
     -Fix signup too after signUp token genrated auto for login
     -Bug fix : when no user / to /login and { replace: true } in navigate
+
+
+    <!--DevTinder Season 03 -->
+    -signUp on aws
+    -lauch aws instance 
+    -ssh -i "DevTinder_Secret.pem" ubuntu@ec2-13-60-186-25.eu-north-1.compute.amazonaws.com   -> yes
+    -install node version and sudo apt update && sudo apt install -y libatomic1
+    -git clone both F and B
+        -Fontend
+
+            -npm i and npm run build
+            -sudo apt update
+            -sudo apt install nginx
+            -sudo systemctl start nginx
+            -sudo systemctl enable nginx
+            -copy code from dist to /var/www/html  
+            -ubuntu@ip-172-31-46-27:~/DevTinder_F$ 
+            sudo scp -r dist/* /var/www/html/
+            -Enable port 80 on our instance
+            - sec -> sec grp -> inbound rul -> port 80 and allow 00000 
+
+        -Beckend    
+            -whitelist the ip of aws engine in db -> public ipv4
+            -npm i pm2 -g  ( in aws server)
+            -pm2 start npm --name "<name>" -- start
+            -pm2 logs 
+            -pm2 list, pm2 flush <name>, pm2 stop <name>, pm2 delete <name>
+            -config nginx -/etc/nginx/sites-avialable/defalut
+            sudo nano /etc/nginx/sites-available/default
+            -restart nginx -> sudo systemctl restart nginx
+            -Modify the base url 
+
+
+        -Connecting Frontend and beckend 
+            -frontend -> http://13.60.186.25/
+            -beckend -> http://13.60.186.25:7777
+            server_name 13.60.186.25;
+            location /api/ {
+                proxy_pass http://localhost:7777/;
+                proxy_http_version 1.1;
+                proxy_set_header Upgrade $http_upgrade;
+                proxy_set_header Connection 'upgrade';
+                proxy_set_header Host $host;
+                proxy_cache_bypass $http_upgrade;
+        }
