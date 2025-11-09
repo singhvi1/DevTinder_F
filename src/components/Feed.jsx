@@ -27,11 +27,13 @@ const Feed = () => {
       console.error(err);
     }
   };
+  
   useEffect(() => {
     if (currUser &&(!feed || feed.length === 0)) {
       getFeed();
     }
-  }, [currUser]);
+  }, [currUser, feed?.length]);
+  
   if (!feed || feed.length === 0) {
     return (
       <div className="flex justify-center items-center h-[60vh]">
