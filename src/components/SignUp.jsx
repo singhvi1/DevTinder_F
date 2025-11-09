@@ -12,6 +12,7 @@ const SignUp = () => {
   const [age, setAge] = useState("");
   const [photoUrl, setPhotoUrl] = useState();
   const [skills, setSkills] = useState("");
+  const [about, setAbout] = useState("");
   const [gender, setGender] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -127,6 +128,13 @@ const SignUp = () => {
             className="textarea textarea-md"
             value={skills}
             onChange={(e) => setSkills(e.target.value)}
+          ></textarea>
+          <label className="label">About</label>
+          <textarea
+            placeholder="Tell your About"
+            className="textarea textarea-md"
+            value={about}
+            onChange={(e) => setAbout(e.target.value)}
           ></textarea>
 
           <p className="text-red-500">{error}</p>

@@ -71,6 +71,10 @@
             sudo nano /etc/nginx/sites-available/default
             -restart nginx -> sudo systemctl restart nginx
             -Modify the base url 
+            -push to github 
+            -in devTinder_F 0f awsServer pull it and create new build 
+            - copy again sudo scp -r dist/* /var/www/html
+            - DONE
 
 
         -Connecting Frontend and beckend 
