@@ -34,7 +34,7 @@ const Feed = () => {
     }
   }, [currUser, feed?.length]);
   
-  if (!feed || feed.length === 0) {
+  if (!feed || feed?.length === 0) {
     return (
       <div className="flex justify-center items-center h-[60vh]">
         <h1 className="text-3xl font-bold text-gray-500">No FEED Found 😢</h1>

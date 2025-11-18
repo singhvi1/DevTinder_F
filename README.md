@@ -91,3 +91,25 @@
                 proxy_set_header Host $host;
                 proxy_cache_bypass $http_upgrade;
         }
+
+# Adding a custom domain name
+
+    -purchase domain
+    -signup cloudflare & add a new domain name
+    -change the nameserver on .name and point it out to cloudflare
+    -wait for sometime till your nameserver are updated 15 min 
+    -DNS recordd : a devtinder.in ipaddress 
+    -enable ssl for website
+
+# 4.Sending a eamils vis ses
+
+    -create a IAM user
+    -give acccess to amazon full access
+    -create an sandbox -> crate an identity -> verify your identity -> verify dns -> verify identity email.
+    -Install AWS sdk -v3
+    -setup sesClient 
+    -access credentials should be created in IAM under security credentials tab 
+    -Add the credentials  to the env file
+    -write code for sesClient
+    -make the email dynamic by passing more parameter
+
