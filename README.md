@@ -113,3 +113,12 @@
     -write code for sesClient
     -make the email dynamic by passing more parameter
 
+# 6 Scheduling Cron jobs in NOdeJs
+    -Installing node -cron
+    -Learning about cron expressions syntax -crontab.guru
+    -schedule a job 
+    -date-fns
+    -find all the unique email id who have got connection request in previous day
+    -Send Email (if production approved)
+    -Explore queue mechanism to send bulk emails (beeque , bull amazon bulk)
+    -Make sendEmail function

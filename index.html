@@ -1,13 +1,23 @@
 <!doctype html>
 <html lang="en">
+
   <head>
     <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="./DevTinder.svg"/>
+    <link rel="icon" type="image/svg+xml" href="./DevTinder.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Devtinder</title>
+    <!-- Cronitor RUM -->
+    <script async src="https://rum.cronitor.io/script.js"></script>
+    <script>
+      window.cronitor = window.cronitor || function () { (window.cronitor.q = window.cronitor.q || []).push(arguments); };
+      cronitor('config', { clientKey: '2a3fd19936c784aca8c8e8c051f07a6e' });
+    </script>
+
   </head>
+
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
+
 </html>

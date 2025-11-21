@@ -7,17 +7,15 @@ import { BASE_URL } from "../utils/constant";
 
 const Navbar = () => {
   const user = useSelector((store) => store.user);
-  const dispatch=useDispatch()
-  const navigate=useNavigate()
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
 
-
-  const handleLogout =async () => {
-    try{
-      await axios.post(BASE_URL+"/logout",{},{ withCredentials: true })
-      dispatch(removeUser())
-      navigate("/login")
-      
-    }catch(err){
+  const handleLogout = async () => {
+    try {
+      await axios.post(BASE_URL + "/logout", {}, { withCredentials: true });
+      dispatch(removeUser());
+      navigate("/login");
+    } catch (err) {
       console.error(err);
     }
   };
@@ -25,7 +23,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-base-200 shadow-sm">
       <div className="flex-1">
-        <NavLink to="/" className="btn btn-ghost text-xl">
+        <NavLink to="/" className="btn btn-ghost  text-sm sm:text-base md:text-lg lg:text-xl">
           ❤️ DevTinder
         </NavLink>
       </div>
@@ -49,7 +47,11 @@ const Navbar = () => {
               <li>
                 <NavLink to="/profile" className="justify-between">
                   Profile
-                  <span className="badge">New</span>
+                </NavLink>
+              </li>
+              <li>
+                <NavLink to="/" className="justify-between">
+                  Feed
                 </NavLink>
               </li>
               <li>

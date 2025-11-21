@@ -118,6 +118,8 @@ const EditProfile = ({ user }) => {
               </button>
             </fieldset>
           </div>
+        </div>
+        <div>
           <UserCard
             user={{ firstName, lastName, photoUrl, age, gender, about, skills }}
           />
