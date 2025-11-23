@@ -17,7 +17,7 @@ const Premium = () => {
       name: notes?.firstName,
       description: "Connect to other developers",
       order_id: orderId,
-      callback_url: "http://localhost:3000/payment-success",
+      callback_url: "https://tindercopy.me/api/payment/webhookok",
       prefill: {
         name: notes?.firstName,
         email: notes?.email,
