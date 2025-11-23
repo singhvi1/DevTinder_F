@@ -122,3 +122,19 @@
     -Send Email (if production approved)
     -Explore queue mechanism to send bulk emails (beeque , bull amazon bulk)
     -Make sendEmail function
+
+# RazerPayment GateWay Integration
+
+    -Sign up for RazerPay & complete Kyc
+    -Created a UI ofr premium page 
+    -Creating an API for cratae order in background 
+    -added my key and secret in env file 
+    -Intialized Razorpay in utils
+    -creating order on Razorpay
+    -Create Shema and model
+    -Saved the order in paymetns collections
+    -Make the aspi dynamic
+    -open the dialogBox
+    -setUp RazerPay webhook on our live API "https://tindercopy.me/api/payment/webhook" (for localhost use ngrok );
+    -
+    

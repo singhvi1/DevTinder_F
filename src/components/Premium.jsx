@@ -1,0 +1,72 @@
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
+
+const Premium = () => {
+  const handleBuyClick = async (type) => {
+    const order = await axios.post(
+      BASE_URL + "/payment/create",
+      { memberShipType: type },
+      { withCredentials: true }
+    );
+    //now it should open Razorpay dialog box
+    const { keyId, amount, currency, notes, orderId } = order.data.data;
+    const options = {
+      key: keyId,
+      amount: amount,
+      currency: currency,
+      name: notes?.firstName,
+      description: "Connect to other developers",
+      order_id: orderId,
+      callback_url: "http://localhost:3000/payment-success",
+      prefill: {
+        name: notes?.firstName,
+        email: notes?.email,
+      },
+      theme: {
+        color: "#F37254",
+      },
+    };
+    const rzp = new window.Razorpay(options);
+    rzp.open();
+    console.log(order);
+  };
+  return (
+    <div className="flex justify-center  m-10 py-20">
+      <div className="flex w-full flex-col lg:flex-row">
+        <div className="card bg-base-300 rounded-box grid h-80  grow place-items-center">
+          <h1 className="font-bold text-3xl ">Silver MemberShip</h1>
+          <ul>
+            <li># Chat with other people</li>
+            <li># 100 connection Requests per day</li>
+            <li># Blue Tick</li>
+            <li># 3 Months</li>
+          </ul>
+          <button
+            className="btn btn-primary"
+            onClick={() => handleBuyClick("silver")}
+          >
+            Buy Silver
+          </button>
+        </div>
+        <div className="divider lg:divider-horizontal">OR</div>
+        <div className="card bg-base-300 rounded-box grid h-80 grow place-items-center">
+          <h2 className="text-3xl font-bold">Gold MemeberShip</h2>
+          <ul>
+            <li># Chat with other people</li>
+            <li># Unlimited connection Requests per day</li>
+            <li># Blue Tick</li>
+            <li># 6 Months</li>
+          </ul>
+          <button
+            className="btn btn-secondary"
+            onClick={() => handleBuyClick("gold")}
+          >
+            Buy Gold
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default Premium;
