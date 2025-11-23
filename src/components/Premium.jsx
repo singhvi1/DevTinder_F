@@ -17,7 +17,7 @@ const Premium = () => {
       name: notes?.firstName,
       description: "Connect to other developers",
       order_id: orderId,
-      callback_url: "https://tindercopy.me/api/payment/webhookok",
+      callback_url: "https://tindercopy.me/api/payment/webhook",
       prefill: {
         name: notes?.firstName,
         email: notes?.email,
