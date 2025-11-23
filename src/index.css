@@ -1,2 +1,6 @@
 @import "tailwindcss";
 @plugin "daisyui";
+
+svg {
+  border: 1px solid red;
+}
