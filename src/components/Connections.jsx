@@ -1,8 +1,9 @@
 import axios from "axios";
 import { useEffect } from "react";
 import { BASE_URL } from "../utils/constant";
-import { connect, useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../utils/store/connectionSlice";
+import { NavLink } from "react-router";
 
 
 
@@ -21,7 +22,7 @@ const Connections = () => {
     fetchConnections();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-  if(!connections || connections.length ==0){
+  if (!connections || connections.length == 0) {
     return (
       <div className="flex justify-center items-center h-[60vh]">
         <h1 className="text-3xl font-bold text-gray-500">
@@ -53,6 +54,11 @@ const Connections = () => {
                   {gender} • {age ? `${age} yrs` : "Age N/A"}
                 </p>
                 <p>{about || "No about info available."}</p>
+                <div className="buttons p-2 m-2 flex gap-4">
+                  <NavLink to={"/chat/"+_id} state={{user:connection}}>
+                  <button className="btn btn-secondary">Chat</button></NavLink>
+                  <button className="btn btn-primary">view</button>
+                </div>
               </li>
             );
           })}

@@ -137,4 +137,10 @@
     -open the dialogBox
     -setUp RazerPay webhook on our live API "https://tindercopy.me/api/payment/webhook" (for localhost use ngrok );
     -
+
+# RealTime chat using websocket.io;
+    -Build ui for chat window on /chat/:targetId
+    -setUp socket.io
+    -npm i socket.io
+
     
