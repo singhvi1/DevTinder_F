@@ -2,7 +2,8 @@ import axios from "axios";
 import { useEffect } from "react";
 import { BASE_URL } from "../utils/constant";
 import { useDispatch, useSelector } from "react-redux";
-import { addConnections } from "../utils/store/connectionSlice";
+import { addConnections } from "../utils/store/connectionsSlice";
+import { addConnection } from "../utils/store/connectionSlice";
 import { NavLink } from "react-router";
 
 
@@ -55,8 +56,8 @@ const Connections = () => {
                 </p>
                 <p>{about || "No about info available."}</p>
                 <div className="buttons p-2 m-2 flex gap-4">
-                  <NavLink to={"/chat/"+_id} state={{user:connection}}>
-                  <button className="btn btn-secondary">Chat</button></NavLink>
+                  <NavLink to={"/chat/" + _id}>
+                    <button className="btn btn-secondary" onClick={()=>dispatch(addConnection(connection))}>Chat</button></NavLink>
                   <button className="btn btn-primary">view</button>
                 </div>
               </li>

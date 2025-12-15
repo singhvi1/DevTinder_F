@@ -1,58 +1,113 @@
-import { useEffect, useState } from "react";
-// import { useLocation, useParams, useSearchParams } from "react-router"
+
+import { useEffect, useRef, useState } from "react";
 import { useParams } from "react-router"
 import { createSocketConnection } from "../utils/socket";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { BASE_URL } from "../utils/constant";
+import { addConnection } from "../utils/store/connectionSlice";
 
 const Chat = () => {
     const { targetUserId } = useParams();
-    // const location = useLocation()
-    // const user = location.state?.user;
     const user = useSelector((store) => store.user);
     const userId = user?._id;
     const firstName = user?.firstName;
     const [messages, setMessages] = useState([]);
-    const [newMessage, setNewMessage] = useState("")
+    const [newMessage, setNewMessage] = useState("");
+    const targetUser = useSelector((store) => store.connection);
+    const dispatch = useDispatch();
+    const bottomRef = useRef(null);
+    const socketRef = useRef(null);
 
     useEffect(() => {
         if (!userId) return;
-        const socket = createSocketConnection();
+        socketRef.current = createSocketConnection();
 
-        socket.emit("joinChat", { userId, targetUserId, firstName });
-        console.log(userId + " " + targetUserId)
+        socketRef.current.emit("joinChat", { userId, targetUserId, firstName });
+        // console.log(userId + " " + targetUserId)
 
-        socket.on("messageReceived",({firstName, text})=>{
+        socketRef.current.on("messageReceived", ({ firstName, text }) => {
             // console.log(firstName + " : " + text)
-            setMessages((messages)=>[...messages, {firstName,text}])
+            setMessages((messages) => [...messages, { firstName, text }])
         })
 
         return () => {
-            socket.disconnect();
+            socketRef.current.disconnect();
         }
     }, [userId, targetUserId])
 
-
     const sendMessage = () => {
-        const socket = createSocketConnection();
-        socket.emit("sendMessage", { 
-            firstName, 
-            userId, 
-            targetUserId, 
-            text: newMessage 
+        if (!socketRef.current || !newMessage.trim()) {
+            setNewMessage("")
+            return;
+        }
+        socketRef.current.emit("sendMessage", {
+            firstName,
+            userId,
+            targetUserId,
+            text: newMessage
         })
         setNewMessage("")
         // console.log(firstName, userId, targetUserId, " message" + newMessage);
     }
+
+    const fetchChatMessages = async () => {
+        const chat = await axios.get(`${BASE_URL}/chat/${targetUserId}`, { withCredentials: true, })
+        // console.log(chat.data)
+        const chatMessages = chat?.data?.messages.map((msg) => {
+            const { senderId, text, updatedAt } = msg
+            const isTime = new Date(updatedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
+            // console.log(isTime)
+
+
+            return {
+                firstName: senderId.firstName,
+                text,
+                isTime,
+            }
+        })
+        setMessages(chatMessages)
+    }
+    useEffect(() => {
+        if (targetUserId) {
+            fetchChatMessages()
+        }
+    }, [targetUserId])
+
+    const findTargetUser = async () => {
+        try {
+            if (!targetUser && targetUserId) {
+                const res = await axios.get(`${BASE_URL}/chat/connection/${targetUserId}`, { withCredentials: true })
+                dispatch(addConnection(res.data.data))
+                // console.log("target user lost")
+                // console.log(res.data.data)
+
+            }
+        } catch (err) {
+            alert(err.message)
+            console.error(err);
+        }
+    }
+    useEffect(() => {
+        findTargetUser()
+    }, [targetUser, targetUserId])
+
+    //bottom message
+    useEffect(() => {
+        bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messages]);
+
     return (
         <div className="w-2/4 mx-auto border border-gray-600 m-5 h-[70vh]">
 
             <div className='flex items-center gap-4 border-b-2 border-gray-400 p-5  justify-center'>
                 <img
-                    src={user?.photoUrl}
-                    alt={`${user?.firstName} ${user?.lastName}`}
+                    src={targetUser?.photoUrl}
+                    alt={`${targetUser?.firstName} ${targetUser?.lastName}`}
                     className="h-12 w-12 rounded-full object-cover border border-gray-400  my-4"
                 />
-                <h1 className="font-bold text-2xl">Chat with {user?.firstName}</h1>
+                <h1 className="font-bold text-2xl">Chat with {" "}
+                    {targetUser?.firstName}</h1>
             </div>
 
             <div className="flex-1 overflow-y-scroll p-5 h-2/3 space-y-3">
@@ -61,10 +116,10 @@ const Chat = () => {
                     return (
 
                         <div className="" key={index}>
-                            <div className="chat chat-start">
+                            <div className={"chat " + (message?.firstName === firstName ? "chat-end" : "chat-start")}>
                                 <div className="chat-header">
                                     {message?.firstName}
-                                    <time className="text-xs opacity-50">2 hours ago</time>
+                                    <time className="text-xs opacity-50">{message.isTime}</time>
                                 </div>
                                 <div className="chat-bubble">{message.text}</div>
                                 <div className="chat-footer opacity-50">Seen</div>
@@ -72,6 +127,7 @@ const Chat = () => {
                         </div>
                     )
                 })}
+                <div ref={bottomRef} />
             </div>
             <div className="flex border-t border-gray-600 p-3">
                 <input
@@ -80,6 +136,11 @@ const Chat = () => {
                     className="flex-1 p-2 border border-gray-400 rounded text-white"
                     value={newMessage}
                     onChange={(e) => { setNewMessage(e.target.value) }}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") {
+                            sendMessage()
+                        }
+                    }}
                 />
                 <button onClick={sendMessage} className="btn btn-primary ml-3">Send</button>
             </div>

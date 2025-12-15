@@ -1,6 +1,10 @@
 import io from "socket.io-client";
 import { BASE_URL } from "./constant";
 
-export const createSocketConnection=()=>{
-    return io(BASE_URL);
+export const createSocketConnection = () => {
+    if (location.hostname === "localhost") {
+        return io(BASE_URL);
+    }else{
+        return io("api",{path:"/api/socket.io"})
+    }
 }

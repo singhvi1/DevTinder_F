@@ -142,5 +142,19 @@
     -Build ui for chat window on /chat/:targetId
     -setUp socket.io
     -npm i socket.io
+    -Setup frontend socket.io-client
+    -initialise the chat 
+    -createSocketConnection
+    -Listen to events
+    -Imporve Ui 
+    -BUG fix : auth in web socket
+    -BUG fix: if i am not friend then i should not send message
+    -HW : limit message
+
+
+    -created connection slice dispatch from chat btn 
+    -BUG fix : on refresh all data lost of connection 
+    -HW :create a view page viewConnection
+    -HW : optimise it please via : message limit , lazy loadin etc 
 
     

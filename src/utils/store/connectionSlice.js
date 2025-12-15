@@ -1,15 +1,16 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice } from "@reduxjs/toolkit";
 
 const connectionSlice = createSlice({
-    name:"connections",
-    initialState:null,
-    reducers:{
-        addConnections:(_,action)=>{
-            return action.payload
+    name: "connection",
+    initialState: null,
+    reducers: {
+        addConnection: (state, action) => {
+            return action.payload;
         },
-        removeConnections:()=> null,
-
+        removerConnection: () => {
+            return null;
+        }
     }
 })
-export const {addConnections, removeConnections}=connectionSlice.actions
-export default connectionSlice.reducer
+export const { addConnection, removerConnection, } = connectionSlice.actions
+export default connectionSlice.reducer;
