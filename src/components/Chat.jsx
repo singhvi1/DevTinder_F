@@ -99,7 +99,7 @@ const Chat = () => {
     }, [messages]);
 
     return (
-        <div className="w-2/4 mx-auto border border-gray-600 m-5 h-[70vh]">
+        <div className="sm:w-1/2 w-3/4 mx-auto border border-gray-600 m-5 h-[70vh]">
 
             <div className='flex items-center sm:gap-4 gap-2 border-b-2 border-gray-400 p-5  justify-center'>
                 <img
