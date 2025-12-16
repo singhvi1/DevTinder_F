@@ -30,7 +30,7 @@ const Body = () => {
   }, []);
 
   return (
-    <div>
+    <div className="pb-14 sm:pb-16">
       <Navbar />
       <Outlet  />
       <Footer />
