@@ -21,18 +21,19 @@ const Chat = () => {
 
     useEffect(() => {
         if (!userId) return;
-        socketRef.current = createSocketConnection();
+        const socket = createSocketConnection();
+        socketRef.current = socket;
 
-        socketRef.current.emit("joinChat", { userId, targetUserId, firstName });
+        socket.emit("joinChat", { userId, targetUserId, firstName });
         // console.log(userId + " " + targetUserId)
 
-        socketRef.current.on("messageReceived", ({ firstName, text }) => {
+        socket.on("messageReceived", ({ firstName, text }) => {
             // console.log(firstName + " : " + text)
-            setMessages((messages) => [...messages, { firstName, text }])
+            setMessages((messages) => [...messages, { firstName, text, isTime: new Date().toLocaleString() }])
         })
 
         return () => {
-            socketRef.current.disconnect();
+            socket.disconnect();
         }
     }, [userId, targetUserId])
 
@@ -54,7 +55,7 @@ const Chat = () => {
     const fetchChatMessages = async () => {
         const chat = await axios.get(`${BASE_URL}/chat/${targetUserId}`, { withCredentials: true, })
         // console.log(chat.data)
-        const chatMessages = chat?.data?.messages.map((msg) => {
+        const chatMessages = (chat?.data?.messages || []).map((msg) => {
             const { senderId, text, updatedAt } = msg
             const isTime = new Date(updatedAt).toLocaleString("en-IN", { timeZone: "Asia/Kolkata" })
             // console.log(isTime)
@@ -90,7 +91,7 @@ const Chat = () => {
     }
     useEffect(() => {
         findTargetUser()
-    }, [targetUser, targetUserId])
+    }, [targetUserId])
 
     //bottom message
     useEffect(() => {
@@ -100,13 +101,13 @@ const Chat = () => {
     return (
         <div className="w-2/4 mx-auto border border-gray-600 m-5 h-[70vh]">
 
-            <div className='flex items-center gap-4 border-b-2 border-gray-400 p-5  justify-center'>
+            <div className='flex items-center sm:gap-4 gap-2 border-b-2 border-gray-400 p-5  justify-center'>
                 <img
                     src={targetUser?.photoUrl}
                     alt={`${targetUser?.firstName} ${targetUser?.lastName}`}
-                    className="h-12 w-12 rounded-full object-cover border border-gray-400  my-4"
+                    className="sm:h-14 sm:w-14 h-8 w-8 rounded-full object-cover border border-gray-400  my-4"
                 />
-                <h1 className="font-bold text-2xl">Chat with {" "}
+                <h1 className="font-bold text-xs  sm:text-2xl lg:text-4xl">Chat with {" "}
                     {targetUser?.firstName}</h1>
             </div>
 
@@ -129,11 +130,11 @@ const Chat = () => {
                 })}
                 <div ref={bottomRef} />
             </div>
-            <div className="flex border-t border-gray-600 p-3">
+            <div className="flex flex-col sm:flex-row border-t border-gray-600 p-2 sm:p-3">
                 <input
                     type="text"
                     placeholder="Type a message..."
-                    className="flex-1 p-2 border border-gray-400 rounded text-white"
+                    className="flex-1 p-2 sm:p-3 border border-gray-400 rounded-lg text-white"
                     value={newMessage}
                     onChange={(e) => { setNewMessage(e.target.value) }}
                     onKeyDown={(e) => {
@@ -142,7 +143,7 @@ const Chat = () => {
                         }
                     }}
                 />
-                <button onClick={sendMessage} className="btn btn-primary ml-3">Send</button>
+                <button onClick={sendMessage} className="btn btn-primary  w-full sm:w-auto sm:py-3 py-2 sm:mx-2">Send</button>
             </div>
         </div>
     )
