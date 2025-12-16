@@ -134,7 +134,7 @@ const Chat = () => {
                 <input
                     type="text"
                     placeholder="Type a message..."
-                    className="flex-1 p-2 sm:p-3 border border-gray-400 rounded-lg text-white"
+                    className="flex-1 h-10 px-2 sm:p-3 border border-gray-400 rounded-lg text-white"
                     value={newMessage}
                     onChange={(e) => { setNewMessage(e.target.value) }}
                     onKeyDown={(e) => {
@@ -143,7 +143,7 @@ const Chat = () => {
                         }
                     }}
                 />
-                <button onClick={sendMessage} className="btn btn-primary  w-full sm:w-auto sm:py-3 py-2 sm:mx-2">Send</button>
+                <button onClick={sendMessage} className="btn btn-primary  w-full sm:w-auto  h-10 px-4">Send</button>
             </div>
         </div>
     )
