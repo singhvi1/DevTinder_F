@@ -99,7 +99,7 @@ const Chat = () => {
     }, [messages]);
 
     return (
-        <div className="sm:w-1/2 w-3/4 mx-auto border border-gray-600 m-5 h-[70vh]">
+        <div className="sm:w-1/2 w-3/4 mx-auto border border-gray-600 m-5 h-[70vh] flex flex-col overflow-hidden">
 
             <div className='flex items-center sm:gap-4 gap-2 border-b-2 border-gray-400 p-5  justify-center'>
                 <img
@@ -111,7 +111,7 @@ const Chat = () => {
                     {targetUser?.firstName}</h1>
             </div>
 
-            <div className="flex-1 overflow-y-scroll p-5 h-2/3 space-y-3">
+            <div className="flex-1 overflow-y-auto p-5  space-y-3">
                 {/**here we will show all message */}
                 {messages.map((message, index) => {
                     return (
@@ -130,11 +130,11 @@ const Chat = () => {
                 })}
                 <div ref={bottomRef} />
             </div>
-            <div className="flex flex-col sm:flex-row border-t border-gray-600 p-2 sm:p-3">
+            <div className="flex flex-col sm:flex-row items-center gap-2 border-t border-gray-600 p-2 sm:p-3">
                 <input
                     type="text"
                     placeholder="Type a message..."
-                    className="flex-1 h-10 px-2 sm:p-3 border border-gray-400 rounded-lg text-white"
+                    className="flex-1 w-full h-12 px-2 sm:p-3 border border-gray-400 rounded-lg text-white"
                     value={newMessage}
                     onChange={(e) => { setNewMessage(e.target.value) }}
                     onKeyDown={(e) => {
@@ -143,7 +143,7 @@ const Chat = () => {
                         }
                     }}
                 />
-                <button onClick={sendMessage} className="btn btn-primary  w-full sm:w-auto  h-10 px-4">Send</button>
+                <button onClick={sendMessage} className="btn btn-primary  w-full sm:w-auto  h-6 sm:h-12 px-4">Send</button>
             </div>
         </div>
     )
