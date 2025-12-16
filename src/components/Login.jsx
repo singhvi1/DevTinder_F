@@ -7,8 +7,8 @@ import { useSelector } from "react-redux";
 import { useEffect } from "react";
 import { BASE_URL } from "../utils/constant";
 const Login = () => {
-  const [emailId, setEmail] = useState("vk@gmil.com");
-  const [password, setPassword] = useState("Vikash@123#");
+  const [emailId, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [error, setError] = useState("");
 
   const dispatch = useDispatch();
